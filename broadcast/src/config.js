@@ -2,7 +2,7 @@ const config = {
     env: process.env.APP_ENV || 'prod',
     app: {
         input: {
-            type: process.env.BROADCAST_INPUT_TYPE || 'UDP_SERVER',
+            type: process.env.BROADCAST_INPUT_TYPE || 'MULTICAST',
             host: process.env.BROADCAST_INPUT_ADDRESS || '230.230.230.230',
             port: +process.env.BROADCAST_INPUT_PORT || 55501,
         },
