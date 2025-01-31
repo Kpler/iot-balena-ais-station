@@ -15,7 +15,6 @@ services:
   broadcast:
     build: ./broadcast
     environment:
-      - BROADCAST_INPUT_TYPE=MULTICAST
       - DOWNSAMPLING_RATE=10
       - BROADCAST_OUTPUT_HOST=5.9.207.224
       - BROADCAST_OUTPUT_PORT=8834
