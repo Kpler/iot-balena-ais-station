@@ -1,6 +1,5 @@
 import * as prefix from './prefixing'
 import {Utils as U} from "@kpler/iot-utilities";
-import config from "../config.js";
 
 describe('testing prefixing utility', () => {
     describe('checking getPrefix functionality. Prefix has the structure c:${timestamp}', () => {

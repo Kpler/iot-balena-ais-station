@@ -1,9 +1,6 @@
 import Downsampling from './Downsampling';
 import m from './Downsampling.mock';
 
-const sleep = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-};
 describe('testing downsampling functionality', () => {
     test('with clean constructor downsamplingRate == 0 and should pass through all the messages', () => {
         const ds = new Downsampling()
