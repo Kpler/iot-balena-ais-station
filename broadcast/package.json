@@ -1,0 +1,38 @@
+{
+  "name": "broadcast",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest --watchAll --coverage",
+    "test-sonar": "jest --coverage",
+    "test-run": "jest"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-class-properties": "^7.23.3",
+    "@babel/plugin-transform-private-methods": "^7.23.3",
+    "@babel/preset-env": "^7.23.2",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0"
+  },
+  "dependencies": {
+    "@kpler/iot-utilities": "^2.5.0",
+    "aisparser": "0.0.13",
+    "axios": "^1.0.0",
+    "moment": "^2.29.4",
+    "pino": "^8.0.0"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coverageReporters": ["lcov", "text"],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!**/index.js",
+      "!src/**/*mock*.js",
+      "!src/**/*config*.js",
+      "!src/**/*constants*.js"
+    ]
+  }
+}
