@@ -28,4 +28,6 @@ cmake-build-debug/
 
 #balena
 .balena/
+
+# npm
 .npmrc
