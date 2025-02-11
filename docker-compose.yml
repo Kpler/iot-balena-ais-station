@@ -15,7 +15,7 @@ services:
     build: ./broadcast
     environment:
       - DOWNSAMPLING_RATE=10
-      - BROADCAST_OUTPUT_HOST=5.9.207.224
+      - BROADCAST_OUTPUT_HOST=listener0.marinetraffic.com
       - BROADCAST_OUTPUT_PORT=8834
       - STATION_ID=3514
     depends_on:
