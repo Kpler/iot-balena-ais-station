@@ -12,7 +12,7 @@ const config = {
             sendMode: process.env.BROADCAST_SEND_MODE || 'tcp',
             isDataSendEnabled:  process.env.IS_DATA_SENDING_ENABLED === 'true' || process.env.IS_DATA_SENDING_ENABLED === undefined,
         },
-        downSampling: +process.env.DOWNSAMPLING_RATE || 0,
+        downSampling: +process.env.DOWNSAMPLING_RATE || 10,
         stationId: process.env.STATION_ID || 0,
     },
     device: {
