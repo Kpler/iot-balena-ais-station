@@ -1,3 +1,31 @@
-name: AIS-Station
-type: sw.application
-version: 0.1.1
+name: balena-mt-station
+type: "sw.application"
+joinable: false
+
+description: |
+  Balena MT Station is an AIS broadcaster designed to send AIS data to MarineTraffic.
+  It runs on BalenaOS and is built for devices receiving AIS messages from a serial port.
+
+
+post-provisioning: |
+  ## Usage instructions
+                     
+ Please refer to the project's [documentation](https://github.com/Kpler/iot-balena-ais-station)
+
+display_name: Balena MT Station
+
+assets:
+  repository:
+    type: blob
+    data: "https://github.com/Kpler/iot-balena-ais-station.git"
+
+application_environment_variables_form:
+  - name: STATION_ID
+    description: "The Station ID assigned by MarineTraffic. Required for broadcasting."
+    required: true
+  - name: BROADCAST_OUTPUT_PORT
+    description: "The port provided by MarineTraffic for data transmission."
+    required: true
+  - name: BROADCAST_OUTPUT_HOST
+    description: "The host address provided by MarineTraffic for data transmission."
+    required: true
