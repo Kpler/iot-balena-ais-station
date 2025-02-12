@@ -1,10 +1,10 @@
 # Balena MT Station (Alpha)
 
-Balena MT Station is a simple AIS broadcaster designed to send AIS data to MarineTraffic. It runs on BalenaOS and is built for embedded devices that receive AIS messages from a serial port.
+Balena MT Station is a simple AIS broadcaster designed to send AIS data to MarineTraffic. It runs on BalenaOS and is built for devices that receive AIS messages from a serial port.
 
 ## Features
 - Reads AIS messages from a serial port
-- Supports valid NMEA 0183 AIS messages (`!AIVDM,...` format)
+- Supports valid NMEA AIS messages (`!AIVDM,...` format)
 - Broadcasts data to MarineTraffic
 - Designed to run on a Balena-managed device
 
@@ -14,7 +14,7 @@ Balena MT Station is a simple AIS broadcaster designed to send AIS data to Marin
 - Raspberry Pi 5
 - QEMU (for testing and development)
 - An AIS receiver with a serial output
-- A MarineTraffic account and API key (if required)
+- A [MarineTraffic account](https://www.marinetraffic.com) and [successful application for becoming a contributor](https://www.marinetraffic.com/en/join-us/cover-your-area )
 - BalenaCloud account (optional for remote management)
 
 ## Setup Instructions
