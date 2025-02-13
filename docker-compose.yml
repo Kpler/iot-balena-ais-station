@@ -5,19 +5,10 @@ services:
   serial-input:
     privileged: true
     build: ./serial-input
-    environment:
-      - SERIAL=/dev/ttyS0
-      - IS_RAW_MODE_ENABLED=true
-      - BAUD_RATE=4800
     restart: always
 
   broadcast:
     build: ./broadcast
-    environment:
-      - DOWNSAMPLING_RATE=10
-      - BROADCAST_OUTPUT_HOST=listener0.marinetraffic.com
-      - BROADCAST_OUTPUT_PORT=8834
-      - STATION_ID=3514
     depends_on:
       - serial-input
     restart: always
