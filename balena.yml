@@ -19,7 +19,7 @@ data:
   application_environment_variables_form:
     - name: STATION_ID
       description: "The Station ID assigned by MarineTraffic. Required for broadcasting."
-      required: true
+      required: false
     - name: BROADCAST_OUTPUT_PORT
       description: "The port provided by MarineTraffic for data transmission."
       required: true
