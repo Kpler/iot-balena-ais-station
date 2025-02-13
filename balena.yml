@@ -16,8 +16,9 @@ display_name: Balena MT Station
 
 assets:
   repository:
-    type: blob
-    data: "https://github.com/Kpler/iot-balena-ais-station.git"
+    type: "blob.asset"
+    data:
+     url: "https://github.com/Kpler/iot-balena-ais-station.git"
 
 application_environment_variables_form:
   - name: STATION_ID
