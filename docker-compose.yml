@@ -5,8 +5,6 @@ services:
   serial-input:
     privileged: true
     build: ./serial-input
-    environment:
-      - IS_RAW_MODE_ENABLED=true
     restart: always
 
   broadcast:
