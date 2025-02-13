@@ -52,7 +52,7 @@ Alternatively, deploy manually by following the steps below.
 1. Clone this repository:
    ```sh
    git https://github.com/Kpler/iot-balena-ais-station.git
-   cd balena-ais-station
+   cd iot-balena-ais-station
    ```
 2. Push the code to Balena:
    ```sh
