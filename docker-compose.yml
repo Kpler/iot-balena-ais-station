@@ -1,6 +1,5 @@
 volumes:
   resin-data:
-
 services:
   serial-input:
     privileged: true
