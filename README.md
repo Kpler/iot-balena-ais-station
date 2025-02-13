@@ -70,7 +70,7 @@ Alternatively, deploy manually by following the steps below.
 
 | Name                      | Default Value       | Options              | Description                                                                                                      |
 |---------------------------|--------------------|----------------------|------------------------------------------------------------------------------------------------------------------|
-| SERIAL_PORT               | `/dev/ttyAMA0`     | -                    | the serial port used to receive data                                                                             |
+| SERIAL            | `/dev/ttyAMA0`     | -                    | the serial port used to receive data                                                                             |
 | BAUD_RATE                 | `38400`            | -                    | baud rate of the serial port                                                                                     |
 | IS_HEX_PARSER_ENABLED     | `false`            | `true`, `false`      | if data are hex-formatted then enable this parser                                                                |
 | IS_RAW_MODE_ENABLED       | `true`             | `true`, `false`      | enable if you want to send the sentence of the AIS messages otherwise a string represantion of the whole message |
