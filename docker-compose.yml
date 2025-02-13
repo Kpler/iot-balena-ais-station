@@ -5,7 +5,6 @@ services:
     privileged: true
     build: ./serial-input
     restart: always
-
   broadcast:
     build: ./broadcast
     depends_on:
