@@ -7,7 +7,6 @@ WORKDIR /usr/src/app
 COPY .babelrc .
 COPY package.json .
 COPY src ./src
-COPY .npmrc .
 
 RUN npm install && npm run test-run && npm prune --production && rm -f .npmrc || exit 1
 
