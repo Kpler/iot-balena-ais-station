@@ -3,7 +3,6 @@ FROM node:lts-alpine3.20
 WORKDIR /usr/src/app
 
 COPY .babelrc .
-COPY .npmrc .
 COPY package.json .
 COPY src ./src
 
