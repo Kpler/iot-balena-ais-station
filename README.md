@@ -22,7 +22,7 @@ Balena MT Station is a simple AIS broadcaster designed to send AIS data to Marin
 ### 1. Deploy with Balena
 Click the button below to deploy this project to BalenaCloud:
 
-[![Deploy with balena](https://balena.io/deploy.png)]((https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/Kpler/iot-balena-ais-station))
+[![Deploy with balena](https://balena.io/deploy.png)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/Kpler/iot-balena-ais-station)
 
 Alternatively, deploy manually by following the steps below.
 
