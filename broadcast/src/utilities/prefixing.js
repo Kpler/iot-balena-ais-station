@@ -1,9 +1,10 @@
-import {Utils as U} from "@kpler/iot-utilities";
+import {calculateChecksum} from "./utils.js";
+
 const getPrefix = () => {
 
     const prefixData = `c:${Date.now()}`;
 
-    return `\\${prefixData}*${U.calculateChecksum(prefixData)}\\`;
+    return `\\${prefixData}*${calculateChecksum(prefixData)}\\`;
 };
 
 export {

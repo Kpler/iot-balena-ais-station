@@ -98,12 +98,6 @@ Alternatively, deploy manually by following the steps below.
 | DOWNSAMPLING_RATE         | `10`                  | -                    | downsampling messages to reduce bandwith throttling. measured in seconds eg. broadcast messages every 10 seconds |
 | STATION_ID                | `0`                   | -                    | add the Station ID received from MarineTraffic's email                                                           |
 | LOG_LEVEL                 | `info`                | `debug`              |                                                                                                                  |
-| LOG_DESTINATION           | `stdout`              | `DataDog`, `NewRelic` |                                                                                                                  |
-| LOG_URL                   | `""`                  | -                    | DataDog or NewRelic URL                                                                                          |
-| LOG_API_KEY               | `""`                  | -                    | DataDog or NewRelic API key                                                                                      |
-| LOG_PROJECT               | `AIS-Station-Project` | -                    |              contain the project metadata info for DD tag or NR log information                                                                                                     |
-| LOG_HOSTNAME              | `AIS-Station-Host`    | -                    |                                                                                                                  |
-
 ### 6. Start the Service
 Once the device is online and receiving AIS data, it will automatically start broadcasting to MarineTraffic.
 
