@@ -9,8 +9,6 @@ services:
   serial-input:
     privileged: true
     build: ./serial-input
-    depends_on:
-      - rtl-sdr
     restart: always
   broadcast:
     build: ./broadcast
