@@ -2,6 +2,10 @@ version: '2'
 volumes:
   resin-data:
 services:
+  rtl-sdr:
+    build: ./rtl-sdr
+    privileged: true
+    restart: always
   serial-input:
     privileged: true
     build: ./serial-input
@@ -10,4 +14,5 @@ services:
     build: ./broadcast
     depends_on:
       - serial-input
+      - rtl-sdr
     restart: always

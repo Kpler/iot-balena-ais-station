@@ -1,25 +1,28 @@
-name: "Balena MT Station"
-type: "sw.application"
-joinable: false
-version: 0.0.2
-fleetcta: "Don't click! See instructions below."
-description: 
-  "Balena MT Station is an AIS broadcaster designed to send AIS data to MarineTraffic.It runs on BalenaOS and is built for devices receiving AIS messages from a serial port."
+name: Balena MT Station
+type: sw.application
+version: 0.0.3
+description: >-
+  Balena MT Station is an AIS broadcaster designed to send AIS data to MarineTraffic.It runs on BalenaOS and is built for devices receiving AIS messages from a serial port.
 post-provisioning: >-
-  ## Usage instructions          
+  ## Usage instructions
   Please refer to the project's [documentation](https://github.com/Kpler/iot-balena-ais-station)
 assets:
   repository:
-    type: "blob.asset"
+    type: blob.asset
     data:
-     url: "https://github.com/Kpler/iot-balena-ais-station"
+     url: 'https://github.com/Kpler/iot-balena-ais-station'
 
 data:
   applicationConfigVariables:
     - RESIN_HOST_CONFIG_enable_uart: 1
-  defaultDeviceType: "raspberrypi4-64"
+  applicationEnvironmentVariables:
+    - SERIAL: /dev/ttyS0
+    - BROADCAST_OUTPUT_HOST: listener0.marinetraffic.com
+    - BROADCAST_OUTPUT_PORT: 5320
+    - STATION_ID: 0
+  defaultDeviceType: raspberrypi4-64
   supportedDeviceTypes:
-    - "raspberrypi3-64"
-    - "raspberrypi4-64"
-    - "raspberrypi5"
-    - "qemux86-64"
+    - raspberrypi3-64
+    - raspberrypi4-64
+    - raspberrypi5
+    - qemux86-64
