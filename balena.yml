@@ -1,4 +1,4 @@
-name: BubblesNet Edge-Device
+name: Balena MT Station
 type: sw.application
 version: 0.0.3
 description: >-
