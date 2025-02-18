@@ -3,7 +3,7 @@
 Balena MT Station is a simple AIS broadcaster designed to send AIS data to MarineTraffic. It runs on BalenaOS and is built for devices that receive AIS messages from a serial port.
 
 ## Features
-- Reads AIS messages from a serial port
+- Reads AIS messages from a serial port or RTL-SDR USB dongle
 - Supports valid NMEA AIS messages (`!AIVDM,...` format)
 - Broadcasts data to MarineTraffic
 - Designed to run on a Balena-managed device
@@ -14,17 +14,28 @@ Balena MT Station is a simple AIS broadcaster designed to send AIS data to Marin
 - Raspberry Pi 5
 - QEMU (for testing and development)
 - An AIS receiver with a serial output
+- A RTL-SDR USB dongle + antenna
 - A [MarineTraffic account](https://www.marinetraffic.com) and [successful application for becoming a contributor](https://www.marinetraffic.com/en/join-us/cover-your-area )
-- BalenaCloud account (optional for remote management)
+- BalenaCloud account
 
 ## Setup Instructions
 
 ### 1. Deploy with Balena
 Click the button below to deploy this project to BalenaCloud:
 
-[![Deploy with balena](https://balena.io/deploy.png)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/Kpler/iot-balena-ais-station)
+[![balena deploy button](https://www.balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/Kpler/iot-balena-ais-station)
 
-Alternatively, deploy manually by following the steps below.
+##### a)After clicking the button a modal  will appear. Chose the device that you want to use and fill the modal with the IP and Port received from MarineTraffic's email, the Station ID (optional).
+##### b)This will create a fleet with the name that you gave
+##### c)Visit your newly create fleet and click Add Device
+1. Select the appropriate device type (e.g., Raspberry Pi 4).
+2. Choose BalenaOS Version (latest recommended version).
+3. Select **Network Connection** (Ethernet or Wi-Fi):
+   - If using **Wi-Fi**, enter your SSID and password.
+4. Click Download balenaOS.
+5. Flash the downloaded image to an SD card using balenaEtcher.
+6. Insert the SD card into your Raspberry Pi and power it on. 
+#### d) Alternatively, deploy manually by following the steps below.
 
 ### 2. Setup Balena and Configure the Device
 #### a) Create a Balena Fleet
@@ -98,6 +109,16 @@ Alternatively, deploy manually by following the steps below.
 | DOWNSAMPLING_RATE         | `10`                  | -                    | downsampling messages to reduce bandwith throttling. measured in seconds eg. broadcast messages every 10 seconds |
 | STATION_ID                | `0`                   | -                    | add the Station ID received from MarineTraffic's email                                                           |
 | LOG_LEVEL                 | `info`                | `debug`              |                                                                                                                  |
+
+#### RTL-SDR Service Environment Variables
+
+| Name            | Default Value | Options               | Description                    |
+|-----------------|---------------|-----------------------|--------------------------------|
+| VERBOSE         | `false`       | `true`                | print all received messages    |
+| RTL_SDR_OUTPUT_HOST | `230.230.230.230	`      | | sending data to specified host |
+| RTL_SDR_OUTPUT_PORT | `55501`       |                       | sending data to specified port |
+
+
 ### 6. Start the Service
 Once the device is online and receiving AIS data, it will automatically start broadcasting to MarineTraffic.
 
