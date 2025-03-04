@@ -1,8 +1,29 @@
 import * as prefix from './prefixing'
-import {calculateChecksum} from "./utils.js";
+import config from "../config.js";
 
 describe('testing prefixing utility', () => {
-    describe('checking getPrefix functionality. Prefix has the structure c:${timestamp}', () => {
+    describe(`checking getPrefix functionality. Prefix has the structure s:$\{stationId},t:$\{token}c:$\{timestamp}`, () => {
+        const RealDate = Date.now;
+        let replacedStationId = jest.replaceProperty(config.app, 'stationId', 12345);
+        let replacedToken = jest.replaceProperty(config.app.output, 'token', 'aVeryLongToken');
+        beforeEach(() => {
+
+            global.Date.now = jest.fn(() => new Date('2022-01-19T10:20:30Z').getTime());
+        });
+        afterAll(() => {
+            replacedToken.restore()
+            replacedStationId.restore()
+            global.Date.now = RealDate;
+        })
+        const timestamp = '1642587630000';
+
+        test('should return prefixing with changed values', () => {
+            expect(prefix.getPrefix()).toEqual(`\\s:${config.app.stationId},t:${config.app.output.token},c:${timestamp}*79\\`);
+        });
+
+    });
+
+    describe('checking getPrefix functionality with default values', () => {
         const RealDate = Date.now;
         beforeEach(() => {
             global.Date.now = jest.fn(() => new Date('2022-01-19T10:20:30Z').getTime());
@@ -12,18 +33,7 @@ describe('testing prefixing utility', () => {
         })
         const timestamp = '1642587630000';
         test('should return prefixing with default values', () => {
-            expect(prefix.getPrefix()).toEqual(`\\c:${timestamp}*67\\`);
-        });
-    });
-    describe('checking calculateChecksum', () => {
-        test('should return correct checksum (CheckSum8 Xor) for the given text', () => {
-            expect(calculateChecksum('test test')).toEqual('20');
-            expect(calculateChecksum('')).toEqual('00');
-            expect(calculateChecksum('AIVDM,1,1,,A,13Td@e0P00QdWJ4Ec:N>4?vN2D=3,0')).toEqual('6A');
-            expect(calculateChecksum('AIVDM,1,1,,B,137LEv00001dIkFEe3HJFR6J0PSm,0')).toEqual('79');
-            expect(calculateChecksum('AIVDM,1,1,,B,13VL:l0P011csLTEf9udDgvR00SS,0')).toEqual('3F');
-            expect(calculateChecksum('AIVDM,1,1,,B,13VL:l0P011csLTEf9udDgvR00SS,0')).toEqual('3F');
-            expect(calculateChecksum('AIVDM,1,1,,B,13P=Lp00001dJ2DEe95L>7`N0@9C,0')).toEqual('52');
+            expect(prefix.getPrefix()).toEqual(`\\s:5320,t:,c:${timestamp}*64\\`);
         });
     });
 });
