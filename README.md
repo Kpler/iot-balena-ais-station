@@ -97,18 +97,19 @@ Click the button below to deploy this project to BalenaCloud:
 
 #### Broadcast Service Environment Variables
 
-| Name                      | Default Value          | Options              | Description                                                                                                      |
-|---------------------------|-----------------------|----------------------|------------------------------------------------------------------------------------------------------------------|
-| BROADCAST_INPUT_TYPE      | `MULTICAST`           | `UDP_SERVER`         |                                                                                                                  |
-| BROADCAST_INPUT_ADDRESS   | `230.230.230.230`     | -                    |                                                                                                                  |
-| BROADCAST_INPUT_PORT      | `55501`               | -                    |                                                                                                                  |
-| BROADCAST_OUTPUT_HOST     | `listener0.marinetraffic.com` | -                    | add the IP received from MarineTraffic's email                                                                   |
-| BROADCAST_OUTPUT_PORT     | `5320`                | -                    | add the Port received from MarineTraffic's email                                                                 |
-| BROADCAST_SEND_MODE       | `tcp`                 | `udp`                |                                                                                                                  |
-| IS_DATA_SENDING_ENABLED   | `true`                | `true`, `false`      |                                                                                                                  |
-| DOWNSAMPLING_RATE         | `10`                  | -                    | downsampling messages to reduce bandwith throttling. measured in seconds eg. broadcast messages every 10 seconds |
-| STATION_ID                | `0`                   | -                    | add the Station ID received from MarineTraffic's email                                                           |
-| LOG_LEVEL                 | `info`                | `debug`              |                                                                                                                  |
+| Name                    | Default Value                 | Options         | Description                                                                                                      |
+|-------------------------|-------------------------------|-----------------|------------------------------------------------------------------------------------------------------------------|
+| BROADCAST_INPUT_TYPE    | `MULTICAST`                   | `UDP_SERVER`    |                                                                                                                  |
+| BROADCAST_INPUT_ADDRESS | `230.230.230.230`             | -               |                                                                                                                  |
+| BROADCAST_INPUT_PORT    | `55501`                       | -               |                                                                                                                  |
+| BROADCAST_OUTPUT_HOST   | `listener0.marinetraffic.com` | -               | add the IP received from MarineTraffic's email if you are not using Balena                                       |
+| BROADCAST_OUTPUT_PORT   | `5320`                        | -               | add the Port received from MarineTraffic's email if you are not using Balena                                     |
+| BROADCAST_SEND_MODE     | `tcp`                         | `udp`           |                                                                                                                  |
+| IS_DATA_SENDING_ENABLED | `true`                        | `true`, `false` |                                                                                                                  |
+| DOWNSAMPLING_RATE       | `10`                          | -               | downsampling messages to reduce bandwith throttling. measured in seconds eg. broadcast messages every 10 seconds |
+| STATION_ID              | `0`                           | -               | add the Station ID received from MarineTraffic's email                                                           |
+| LOG_LEVEL               | `info`                        | `debug`         |                                                                                                                  |
+| TOKEN                   | `null`                        | -               | add the authentication Token received from MarineTraffic's email if you are using Balena                                                                                     |
 
 #### RTL-SDR Service Environment Variables
 
