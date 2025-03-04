@@ -1,6 +1,6 @@
 name: Balena MT Station
 type: sw.application
-version: 0.0.3
+version: 0.0.4
 description: >-
   Balena MT Station is an AIS broadcaster designed to send AIS data to MarineTraffic.It runs on BalenaOS and is built for devices receiving AIS messages from a serial port.
 post-provisioning: >-
