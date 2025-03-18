@@ -1,4 +1,4 @@
-# Balena MT Station (Alpha)
+# Balena MT Station (Beta Release Candidate)
 
 Balena MT Station is a simple AIS broadcaster designed to send AIS data to MarineTraffic. It runs on BalenaOS and is built for devices that receive AIS messages from a serial port.
 
