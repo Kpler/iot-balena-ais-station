@@ -25,7 +25,7 @@ Click the button below to deploy this project to BalenaCloud:
 
 [![balena deploy button](https://www.balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/Kpler/iot-balena-ais-station)
 
-##### a)After clicking the button a modal  will appear. Chose the device that you want to use and fill the modal with the IP and Port received from MarineTraffic's email, the Station ID (optional).
+##### a)After clicking the button a modal  will appear. Chose the device that you want to use and fill the modal with the StationId and Token received from MarineTraffic's email.
 ##### b)This will create a fleet with the name that you gave
 ##### c)Visit your newly create fleet and click Add Device
 1. Select the appropriate device type (e.g., Raspberry Pi 4).
@@ -97,19 +97,19 @@ Click the button below to deploy this project to BalenaCloud:
 
 #### Broadcast Service Environment Variables
 
-| Name                    | Default Value                 | Options         | Description                                                                                                      |
-|-------------------------|-------------------------------|-----------------|------------------------------------------------------------------------------------------------------------------|
-| BROADCAST_INPUT_TYPE    | `MULTICAST`                   | `UDP_SERVER`    |                                                                                                                  |
-| BROADCAST_INPUT_ADDRESS | `230.230.230.230`             | -               |                                                                                                                  |
-| BROADCAST_INPUT_PORT    | `55501`                       | -               |                                                                                                                  |
-| BROADCAST_OUTPUT_HOST   | `listener0.marinetraffic.com` | -               | add the IP received from MarineTraffic's email if you are not using Balena                                       |
-| BROADCAST_OUTPUT_PORT   | `5320`                        | -               | add the Port received from MarineTraffic's email if you are not using Balena                                     |
-| BROADCAST_SEND_MODE     | `tcp`                         | `udp`           |                                                                                                                  |
-| IS_DATA_SENDING_ENABLED | `true`                        | `true`, `false` |                                                                                                                  |
+| Name                    | Default Value                 | Options         | Description                                                                                                    |
+|-------------------------|-------------------------------|-----------------|----------------------------------------------------------------------------------------------------------------|
+| BROADCAST_INPUT_TYPE    | `MULTICAST`                   | `UDP_SERVER`    |                                                                                                                |
+| BROADCAST_INPUT_ADDRESS | `230.230.230.230`             | -               |                                                                                                                |
+| BROADCAST_INPUT_PORT    | `55501`                       | -               |                                                                                                                |
+| BROADCAST_OUTPUT_HOST   | `listener0.marinetraffic.com` | -               | That's the default URL that the application should send data                                                   |
+| BROADCAST_OUTPUT_PORT   | `5320`                        | -               | That's the default Port that the application should send data                                               |
+| BROADCAST_SEND_MODE     | `tcp`                         | `udp`           |                                                                                                                |
+| IS_DATA_SENDING_ENABLED | `true`                        | `true`, `false` |                                                                                                                |
 | DOWNSAMPLING_RATE       | `10`                          | -               | downsampling messages to reduce bandwith throttling. measured in seconds eg. broadcast messages every 10 seconds |
-| STATION_ID              | `0`                           | -               | add the Station ID received from MarineTraffic's email                                                           |
-| LOG_LEVEL               | `info`                        | `debug`         |                                                                                                                  |
-| TOKEN                   | `null`                        | -               | add the authentication Token received from MarineTraffic's email if you are using Balena                                                                                     |
+| STATION_ID              | `0`                           | -               | add the Station ID received from MarineTraffic's email                                                         |
+| LOG_LEVEL               | `info`                        | `debug`         |                                                                                                                |
+| TOKEN                   | `null`                        | -               | add the authentication Token received from MarineTraffic's email                        |
 
 #### RTL-SDR Service Environment Variables
 
