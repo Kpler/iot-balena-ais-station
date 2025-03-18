@@ -11,6 +11,7 @@ const config = {
             port: +process.env.BROADCAST_OUTPUT_PORT || 5320,
             sendMode: process.env.BROADCAST_SEND_MODE || 'tcp',
             isDataSendEnabled:  process.env.IS_DATA_SENDING_ENABLED === 'true' || process.env.IS_DATA_SENDING_ENABLED === undefined,
+            token: process.env.TOKEN || null,
         },
         downSampling: +process.env.DOWNSAMPLING_RATE || 10,
         stationId: process.env.STATION_ID || 0,
