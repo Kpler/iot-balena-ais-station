@@ -6,7 +6,6 @@ const config = {
         isHexParserEnabled: process.env.IS_HEX_PARSER_ENABLED && process.env.IS_HEX_PARSER_ENABLED === 'true',
         isRawModeEnabled: process.env.IS_RAW_MODE_ENABLED === 'true' || process.env.IS_RAW_MODE_ENABLED === undefined,
         output: {
-            sendMode: process.env.SERIAL_OUTPUT_SEND_MODE || 'multicast',
             host: process.env.SERIAL_OUTPUT_HOST || '230.230.230.230',
             port: +process.env.SERIAL_OUTPUT_PORT || 55501,
         },

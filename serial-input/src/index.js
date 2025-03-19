@@ -44,26 +44,11 @@ const parser = () => {
 };
 
 const output = () => {
-    const sendMode = C.app.output.sendMode;
     const host = C.app.output.host;
     const port = C.app.output.port;
     const isRawMode = C.app.isRawModeEnabled;
 
-    let output;
-    switch (sendMode) {
-        case 'multicast': {
-            output = new dataSend.Multicast(port, host);
-            break;
-        }
-        case 'tcp': {
-            output = new dataSend.TCP(port, host);
-            break;
-        }
-        case 'udp':
-        default: {
-            output = new dataSend.UDP(port, host);
-        }
-    }
+    let output = new dataSend.Multicast(port, host);
 
     return new Writable({
         write(chunk, encoding, callback) {
