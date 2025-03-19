@@ -1,32 +1,30 @@
-const calculateNMEAMessageChecksum = (message) => calculateChecksum(clearNMEAMessageFromChecksumAndNMEAStartChar(message));
+const calculateNMEAMessageChecksum = (message:string):string => calculateChecksum(clearNMEAMessageFromChecksumAndNMEAStartChar(message));
 
-const clearNMEAMessageFromChecksumAndNMEAStartChar = (message) => {
+const clearNMEAMessageFromChecksumAndNMEAStartChar:(message:string) =>string = (message:string):string => {
     const startIndex = findNMEAStartIndex(message) + 1;
     const endIndex = message.includes("*") ? message.indexOf('*') : message.length;
 
     return message.substring(startIndex, endIndex);
 };
 
-const exportChecksumFromNMEAMessage = (message) => message.substring(message.length - 2);
+const exportChecksumFromNMEAMessage = (message:string):string => message.substring(message.length - 2);
 
-const findNMEAStartIndex = (message) => {
+const findNMEAStartIndex:(message:string)=>number = (message:string):number => {
     if (message.indexOf('!') !== -1) {
         return message.indexOf('!');
     } else if (message.indexOf('$') !== -1) {
         return message.indexOf('$');
     }
-    return null;
+    return 0;
 }
 
-const calculateChecksum = (text) => {
+const calculateChecksum:(text:string)=>string = (text:string):string => {
     let checksum = 0;
 
-    // For each char in the text
     for (let i = 0; i < text.length; i++) {
         checksum ^= text.charCodeAt(i);
     }
 
-    // convert checksum to hex
     let hex = Number(checksum).toString(16).toUpperCase();
     if (hex.length < 2) {
         hex = ('00' + hex).slice(-2);
@@ -35,9 +33,9 @@ const calculateChecksum = (text) => {
     return hex;
 };
 
-const convertHexToBinaryString = (msg) => {
-    const charArray = msg.split('');
-    const stringBuilder = [];
+const convertHexToBinaryString:(msg:string)=>string = (msg:string):string => {
+    const charArray:string[] = msg.split('');
+    const stringBuilder:string[] = [];
 
     charArray.forEach((cChar) => {
         const i = parseInt(cChar, 16);
@@ -47,7 +45,7 @@ const convertHexToBinaryString = (msg) => {
     return stringBuilder.join('');
 }
 
-const convertBinary6BitASCIIToASCII = (binary) => {
+const convertBinary6BitASCIIToASCII:(binary:string)=>string = (binary:string):string => {
     const decodedString = [];
 
     for (let i = 0; i < binary.length / 6; ++i) {
@@ -64,25 +62,27 @@ const convertBinary6BitASCIIToASCII = (binary) => {
     return decodedString.join('');
 }
 
-const isHexMessageValid = (hexMessage) => {
-    const regex = new RegExp('2c(.*?)0d0a', 'ig');
+const isHexMessageValid:(hexMessage:string)=>boolean = (hexMessage:string):boolean => {
+    const regex = /2c(.*?)0d0a/ig;
     const match = regex.exec(hexMessage);
 
     return match !== null;
 };
 
-const findReceiverChannelFromHexMessage = (hexMessage) => {
-    const regex = new RegExp('2c(.*?)0d0a', 'ig');
+const findReceiverChannelFromHexMessage:(hexMessage:string)=>string = (hexMessage:string):string => {
+    const regex = /2c(.*?)0d0a/ig;
     const match = regex.exec(hexMessage);
-
+    if (match === null) {
+        return '';
+    }
     let channel;
     switch (match[1]) {
+        case '42':
+            channel = 'B';
+            break;
         case '41':
         default:
             channel = 'A';
-            break;
-        case '42':
-            channel = 'B';
             break;
     }
 

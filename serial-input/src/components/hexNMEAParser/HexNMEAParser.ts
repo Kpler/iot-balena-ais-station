@@ -1,30 +1,30 @@
-import L from '../../appLogger.js'
-import * as U from './utils.js';
+import L from '../../appLogger'
+import * as U from './utils';
 
 class HexNMEAParser {
-    #buffer = '';
-    #multipartCounter = 0;
-    #multipartMessageLength = 60;
+    #buffer:string = '';
+    #multipartCounter:number = 0;
+    readonly #multipartMessageLength:number = 60;
 
     constructor() {
         L.info('HexNMEAParse is on');
     }
 
-    parseData(chunk) {
-        let NMEAMessages = [];
-        this._splitRawDataToMessages(chunk).forEach((hexMessage) => {
+    parseData(chunk:Buffer):string[] {
+        let NMEAMessages:string[] = [];
+        this._splitRawDataToMessages(chunk).forEach((hexMessage:string):void => {
             NMEAMessages = NMEAMessages.concat(this._parseHexToNMEAMessage(hexMessage));
         });
         return NMEAMessages;
     }
 
-    _splitRawDataToMessages(chunk) {
-        const NMEAMessages = [];
-        let rawMessage = chunk.toString('hex').replace('2c410d0a', '2c410d0a==');
+    _splitRawDataToMessages(chunk:Buffer):string[] {
+        const NMEAMessages:string[] = [];
+        let rawMessage:string = chunk.toString('hex').replace('2c410d0a', '2c410d0a==');
         rawMessage = rawMessage.replace('2c420d0a', '2c420d0a==');
         this.#buffer += rawMessage;
 
-        const messages = this.#buffer.split('==');
+        const messages:string[] = this.#buffer.split('==');
         this.#buffer = '';
         messages.forEach((message) => {
             if (message.endsWith('2c410d0a') || message.endsWith('2c420d0a')) {
@@ -37,7 +37,7 @@ class HexNMEAParser {
         return NMEAMessages;
     }
 
-    _parseHexToNMEAMessage(hexMessage) {
+    _parseHexToNMEAMessage(hexMessage:string):string[] {
         if (!U.isHexMessageValid(hexMessage)) {
             return [];
         }
@@ -52,27 +52,27 @@ class HexNMEAParser {
         return this._handleSinglePartMessage(payload, channel);
     }
 
-    _isMultipart(message) {
+    _isMultipart(message:string):boolean {
         return message.length > this.#multipartMessageLength;
     }
 
-    _handleSinglePartMessage(payload, channel) {
+    _handleSinglePartMessage(payload:string, channel:string):string[] {
         let aisMessage = `AIVDM,1,1,,${channel},${payload},0`;
 
         return [`!${aisMessage}*${U.calculateChecksum(aisMessage)}`];
     }
 
-    _handleMultipartMessage(fullPayload, channel) {
-        let payload = fullPayload;
+    _handleMultipartMessage(fullPayload:string, channel:string):string[] {
+        let payload:string = fullPayload;
 
-        const payloadParts = [];
+        const payloadParts:string[] = [];
         while (payload.length > 60) {
             payloadParts.push(payload.slice(0, 60));
             payload = payload.slice(60);
         }
         payloadParts.push(payload);
 
-        const NMEAMessages = payloadParts.map((payloadPart, index) => {
+        const NMEAMessages = payloadParts.map((payloadPart:string, index:number):string => {
             let aisMessage = `AIVDM,${payloadParts.length},${index + 1},${this.#multipartCounter},${channel},${payloadPart},0`;
             return `!${aisMessage}*${U.calculateChecksum(aisMessage)}`;
         });
