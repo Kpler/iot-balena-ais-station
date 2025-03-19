@@ -1,12 +1,14 @@
 import dgram from 'dgram';
-import L from '../../../appLogger.js';
+import L from '../../../appLogger';
+import {Socket} from "node:dgram";
+import {AddressInfo} from "node:net";
 
 class Multicast {
-    server;
-    destinationPort;
-    multicastAddress;
+    server:Socket;
+    destinationPort:number;
+    multicastAddress:string;
 
-    constructor(destinationPort, multicastAddress) {
+    constructor(destinationPort:number, multicastAddress:string) {
         this.server = dgram.createSocket('udp4');
         this.destinationPort = destinationPort;
         this.multicastAddress = multicastAddress;
@@ -17,7 +19,7 @@ class Multicast {
         });
 
         this.server.on('listening', () => {
-            const address = this.server.address();
+            const address:AddressInfo = this.server.address();
             L.debug(`Multicast destination - ${multicastAddress}:${destinationPort} - server listening ${address.address}:${address.port}`);
             this.server.setBroadcast(true)
         });
@@ -25,7 +27,7 @@ class Multicast {
         this.server.bind();
     }
 
-    sendData(data) {
+    sendData(data:string) {
         this.server.send(data, this.destinationPort, this.multicastAddress);
     }
 }
