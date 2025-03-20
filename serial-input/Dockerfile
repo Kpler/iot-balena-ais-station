@@ -4,10 +4,12 @@ RUN apk add --no-cache make gcc g++ python3 linux-headers udev nano minicom
 
 WORKDIR /usr/src/app
 
-COPY .babelrc .
 COPY package.json .
+COPY package-lock.json .
+COPY tsconfig.json .
+COPY jest.config.js .
 COPY src ./src
 
-RUN npm install && npm run test-run && npm prune --production && rm -f .npmrc || exit 1
+RUN npm ci && npm run build && npm run test && npm prune --production && rm jest.config.js
 
-CMD ["node", "./src/index.js"]
+CMD ["npm","run","start"]
