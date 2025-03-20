@@ -1,1 +1,1 @@
-export { default as Multicast } from './multicast/index.js';
+export { default as Multicast } from './multicast/index';

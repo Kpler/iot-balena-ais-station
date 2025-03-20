@@ -1,1 +1,1 @@
-export { default } from './HexNMEAParser.js';
+export { default } from './HexNMEAParser';
