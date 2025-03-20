@@ -1,24 +1,25 @@
-const calculateNMEAMessageChecksum = (message:string):string => calculateChecksum(clearNMEAMessageFromChecksumAndNMEAStartChar(message));
+const calculateNMEAMessageChecksum = (message: string): string => calculateChecksum(clearNMEAMessageFromChecksumAndNMEAStartChar(message));
 
-const clearNMEAMessageFromChecksumAndNMEAStartChar:(message:string) =>string = (message:string):string => {
-    const startIndex = findNMEAStartIndex(message) + 1;
+const clearNMEAMessageFromChecksumAndNMEAStartChar: (message: string) => string = (message: string): string => {
+    let startIndexOfMessage = findNMEAStartIndex(message) ?? 0 ;
+    const startIndex = startIndexOfMessage + 1;
     const endIndex = message.includes("*") ? message.indexOf('*') : message.length;
 
     return message.substring(startIndex, endIndex);
 };
 
-const exportChecksumFromNMEAMessage = (message:string):string => message.substring(message.length - 2);
+const exportChecksumFromNMEAMessage = (message: string): string => message.substring(message.length - 2);
 
-const findNMEAStartIndex:(message:string)=>number = (message:string):number => {
+const findNMEAStartIndex: (message: string) => number | null = (message: string): number | null => {
     if (message.indexOf('!') !== -1) {
         return message.indexOf('!');
     } else if (message.indexOf('$') !== -1) {
         return message.indexOf('$');
     }
-    return 0;
+    return null;
 }
 
-const calculateChecksum:(text:string)=>string = (text:string):string => {
+const calculateChecksum: (text: string) => string = (text: string): string => {
     let checksum = 0;
 
     for (let i = 0; i < text.length; i++) {
@@ -33,9 +34,9 @@ const calculateChecksum:(text:string)=>string = (text:string):string => {
     return hex;
 };
 
-const convertHexToBinaryString:(msg:string)=>string = (msg:string):string => {
-    const charArray:string[] = msg.split('');
-    const stringBuilder:string[] = [];
+const convertHexToBinaryString: (msg: string) => string = (msg: string): string => {
+    const charArray: string[] = msg.split('');
+    const stringBuilder: string[] = [];
 
     charArray.forEach((cChar) => {
         const i = parseInt(cChar, 16);
@@ -45,7 +46,7 @@ const convertHexToBinaryString:(msg:string)=>string = (msg:string):string => {
     return stringBuilder.join('');
 }
 
-const convertBinary6BitASCIIToASCII:(binary:string)=>string = (binary:string):string => {
+const convertBinary6BitASCIIToASCII: (binary: string) => string = (binary: string): string => {
     const decodedString = [];
 
     for (let i = 0; i < binary.length / 6; ++i) {
@@ -62,14 +63,14 @@ const convertBinary6BitASCIIToASCII:(binary:string)=>string = (binary:string):st
     return decodedString.join('');
 }
 
-const isHexMessageValid:(hexMessage:string)=>boolean = (hexMessage:string):boolean => {
+const isHexMessageValid: (hexMessage: string) => boolean = (hexMessage: string): boolean => {
     const regex = /2c(.*?)0d0a/ig;
     const match = regex.exec(hexMessage);
 
     return match !== null;
 };
 
-const findReceiverChannelFromHexMessage:(hexMessage:string)=>string = (hexMessage:string):string => {
+const findReceiverChannelFromHexMessage: (hexMessage: string) => string = (hexMessage: string): string => {
     const regex = /2c(.*?)0d0a/ig;
     const match = regex.exec(hexMessage);
     if (match === null) {

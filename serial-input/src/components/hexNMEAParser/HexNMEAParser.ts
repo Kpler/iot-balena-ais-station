@@ -2,9 +2,9 @@ import L from '../../appLogger'
 import * as U from './utils';
 
 class HexNMEAParser {
-    #buffer:string = '';
-    #multipartCounter:number = 0;
-    readonly #multipartMessageLength:number = 60;
+    private buffer:string = '';
+    private multipartCounter:number = 0;
+    private readonly multipartMessageLength:number = 60;
 
     constructor() {
         L.info('HexNMEAParse is on');
@@ -22,15 +22,15 @@ class HexNMEAParser {
         const NMEAMessages:string[] = [];
         let rawMessage:string = chunk.toString('hex').replace('2c410d0a', '2c410d0a==');
         rawMessage = rawMessage.replace('2c420d0a', '2c420d0a==');
-        this.#buffer += rawMessage;
+        this.buffer += rawMessage;
 
-        const messages:string[] = this.#buffer.split('==');
-        this.#buffer = '';
+        const messages:string[] = this.buffer.split('==');
+        this.buffer = '';
         messages.forEach((message) => {
             if (message.endsWith('2c410d0a') || message.endsWith('2c420d0a')) {
                 NMEAMessages.push(message);
             } else if (message.length > 0) {
-                this.#buffer += message;
+                this.buffer += message;
             }
         });
 
@@ -53,7 +53,7 @@ class HexNMEAParser {
     }
 
     _isMultipart(message:string):boolean {
-        return message.length > this.#multipartMessageLength;
+        return message.length > this.multipartMessageLength;
     }
 
     _handleSinglePartMessage(payload:string, channel:string):string[] {
@@ -73,12 +73,15 @@ class HexNMEAParser {
         payloadParts.push(payload);
 
         const NMEAMessages = payloadParts.map((payloadPart:string, index:number):string => {
-            let aisMessage = `AIVDM,${payloadParts.length},${index + 1},${this.#multipartCounter},${channel},${payloadPart},0`;
+            let aisMessage = `AIVDM,${payloadParts.length},${index + 1},${this.multipartCounter},${channel},${payloadPart},0`;
             return `!${aisMessage}*${U.calculateChecksum(aisMessage)}`;
         });
 
-        this.#multipartCounter === 9 ? this.#multipartCounter = 0 : this.#multipartCounter += 1;
-
+        if (this.multipartCounter === 9) {
+            this.multipartCounter = 0;
+        }else{
+            this.multipartCounter += 1;
+        }
         return NMEAMessages;
     }
 }
