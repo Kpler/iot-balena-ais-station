@@ -1,1 +1,1 @@
-export { default } from './Downsampling.js';
+export { default } from './Downsampling';

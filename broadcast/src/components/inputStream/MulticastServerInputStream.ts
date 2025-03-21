@@ -1,7 +1,7 @@
 import dgram from 'dgram';
 
-import InputStream from './InputStream.js';
-import L from '../../appLogger.js';
+import InputStream from './InputStream';
+import L from '../../appLogger';
 
 class MulticastServerInputStream extends InputStream {
     #inputFeed

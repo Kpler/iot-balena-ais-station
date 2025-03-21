@@ -1,1 +1,1 @@
-export { default } from './TCP.js';
+export { default } from './TCP';

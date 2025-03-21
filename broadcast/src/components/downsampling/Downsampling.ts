@@ -1,5 +1,5 @@
 import moment from 'moment';
-import L from '../../appLogger.js';
+import L from '../../appLogger';
 
 class Downsampling {
     #samplingMap = new Map();

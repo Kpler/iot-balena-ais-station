@@ -1,1 +1,1 @@
-export { default } from './AISDecoder.js';
+export { default } from './AISDecoder';

@@ -1,1 +1,1 @@
-export { default } from './UDP.js';
+export { default } from './UDP';

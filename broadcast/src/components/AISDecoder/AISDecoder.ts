@@ -1,5 +1,5 @@
 import AisParser from 'aisparser';
-import L from '../../appLogger.js';
+import L from '../../appLogger';
 
 class AISDecoder {
     #messageBuffer = [];

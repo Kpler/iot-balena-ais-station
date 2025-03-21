@@ -1,2 +1,2 @@
-export { default as UDPServerInputStream } from './UDPServerInputStream.js';
-export { default as MulticastServerInputStream } from './MulticastServerInputStream.js';
+export { default as UDPServerInputStream } from './UDPServerInputStream';
+export { default as MulticastServerInputStream } from './MulticastServerInputStream';

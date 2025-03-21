@@ -1,11 +1,11 @@
 import { Writable, Transform } from "stream";
-import L from './appLogger.js';
-import AISDecoder from './components/AISDecoder/index.js';
-import Downsampling from './components/downsampling/index.js';
-import * as dataSend from './components/dataSender/index.js';
-import * as inputStream from './components/inputStream/index.js';
-import { getPrefix } from './utilities/prefixing.js';
-import config from "./config.js";
+import L from './appLogger';
+import AISDecoder from './components/AISDecoder/index';
+import Downsampling from './components/downsampling/index';
+import * as dataSend from './components/dataSender/index';
+import * as inputStream from './components/inputStream/index';
+import { getPrefix } from './utilities/prefixing';
+import config from "./config";
 
 const inputType = config.app.input.type;
 const inputHost = config.app.input.host;

@@ -1,6 +1,6 @@
 import dgram from "dgram";
-import L from '../../../appLogger.js';
-import { dnsLookup } from '../../../utilities/utils.js';
+import L from '../../../appLogger';
+import { dnsLookup } from '../../../utilities/utils';
 
 class UDP {
     #udpClient;
