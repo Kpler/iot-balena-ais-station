@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "aisparser": "0.0.13",
-    "axios": "^1.8.4",
     "moment": "^2.29.4",
     "pino": "^8.0.0"
   }
