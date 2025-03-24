@@ -18,13 +18,17 @@ class UDPServerInputStream extends InputStream {
             L.info(`Input Feed listening on ${address.address}:${address.port}`);
         });
         this.inputFeed.bind(port);
-        this.inputFeed.on('message', (message:Buffer):void => {
+        this.inputFeed.on('message', (message: Buffer): void => {
             L.debug(`Message feed =>${message}<=`);
-            super.write(message.toString().trim());
+            this.write(message.toString().trim());
         });
         this.inputFeed.on('error', (err) => {
             L.error('UDP ERROR ' + err.message);
         });
+    }
+
+    write(message: string): void {
+        super.write(message);
     }
 
 }

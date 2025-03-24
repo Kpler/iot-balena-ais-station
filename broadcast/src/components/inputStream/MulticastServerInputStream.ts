@@ -23,12 +23,16 @@ class MulticastServerInputStream extends InputStream {
         this.inputFeed.bind(port);
         this.inputFeed.on('message', (message:Buffer):void => {
             L.debug(`Message feed =>${message}<=`);
-            super.write(message.toString().trim());
+            this.write(message.toString().trim());
         });
 
         this.inputFeed.on('error', (err:Error):void => {
            L.error('UDP ERROR ' + err.message);
         });
+    }
+
+    write(message: string): void {
+        super.write(message);
     }
 
 }

@@ -18,7 +18,7 @@ class TCP {
     }
 
     connect() {
-        L.info(`Try to connect with server ${this.serverHost}:{this.#serverPort}`);
+        L.info(`Try to connect with server ${this.serverHost}:${this.serverPort}`);
         this.tcpClient = new Socket();
         this.tcpClient.on('error', (err: Error): void => {
             L.error('TCP ERROR ' + err.message);
