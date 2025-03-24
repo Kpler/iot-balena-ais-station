@@ -1,9 +1,8 @@
 import dns from 'dns';
 
-type DnsCallback = (address: string) => void;
 
-const dnsLookup: (host: string, cb: DnsCallback, timeout: number, family: number) => void = (host: string, cb: DnsCallback, timeout: number, family: number = 4): void => {
-    dns.lookup(host, (err: NodeJS.ErrnoException | null, address: string, family: number) => {
+const dnsLookup = (host: string, cb: (address: string) => void, timeout: number, family: number = 4): void => {
+    dns.lookup(host, {family}, (err: NodeJS.ErrnoException | null, address: string, family: number): void => {
         cb(address);
     });
 

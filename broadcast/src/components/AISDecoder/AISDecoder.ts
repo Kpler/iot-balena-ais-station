@@ -1,12 +1,16 @@
-import {AISMessage, AisParser} from 'aisparser';
+import AisParser,{AISMessage} from 'aisparser';
 import L from '../../appLogger';
 
 class AISDecoder {
     private messageBuffer: string[] = [];
-    private readonly parser: AisParser = new AisParser({checksum: true});
+    private readonly parser: AisParser;
+
+    constructor() {
+        this.parser = new AisParser({checksum: true});
+    }
 
     decode(message:string):{}|null {
-        const AISObj:AISMessage = {messageType: 0, mmsi: 0, rawMessages: []};
+        const AISObj:AISMessage = {aisType: null, mmsi: null, rawMessages: []};
         this.messageBuffer.push(message);
         const parsedMessage:AISMessage = this.parser.parse(message);
 

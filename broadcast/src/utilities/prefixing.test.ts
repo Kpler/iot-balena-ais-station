@@ -1,10 +1,10 @@
 import * as prefix from './prefixing'
-import config from "../config.js";
+import config from "../config";
 
 describe('testing prefixing utility', () => {
     describe(`checking getPrefix functionality. Prefix has the structure s:$\{stationId},t:$\{token}c:$\{timestamp}`, () => {
         const RealDate = Date.now;
-        let replacedStationId = jest.replaceProperty(config.app, 'stationId', 12345);
+        let replacedStationId = jest.replaceProperty(config.app, 'stationId', '12345');
         let replacedToken = jest.replaceProperty(config.app.output, 'token', 'aVeryLongToken');
         beforeEach(() => {
 

@@ -1,8 +1,8 @@
 declare module 'aisparser' {
 
     export interface AISMessage {
-        messageType: number;
-        mmsi: number;
+        aisType: ?number;
+        mmsi: ?number;
         [key: string]: any;
     }
 
@@ -10,8 +10,10 @@ declare module 'aisparser' {
         checksum?: boolean;
     }
 
-    export class AisParser {
+    class AisParser {
         constructor(options?: ParseOptions);
         parse(sentence: string, options?: ParseOptions): AISMessage;
     }
+
+    export = AisParser;
 }

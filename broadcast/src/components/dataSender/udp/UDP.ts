@@ -9,7 +9,7 @@ class UDP {
 
     constructor(port: number, host: string) {
         this.udpClient = dgram.createSocket('udp4');
-        dnsLookup(host, (address: string) => this.serverHost = address, 60000);
+        dnsLookup(host, (address: string):string => this.serverHost = address, 60000);
         this.serverPort = port;
     }
 

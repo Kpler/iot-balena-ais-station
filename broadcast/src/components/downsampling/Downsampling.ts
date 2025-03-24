@@ -18,7 +18,7 @@ class Downsampling {
             return true;
         }
 
-        const mmsi:number = AISObj.mmsi;
+        const mmsi:number = AISObj.mmsi ?? 0;
         L.debug(`Downsampling mmsi: ${mmsi}`);
         if (this.samplingMap.has(mmsi)) {
             const now: Moment = moment();
