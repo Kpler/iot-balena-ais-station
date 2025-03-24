@@ -464,12 +464,16 @@ export default {
     decodedNMEAMessagesUnsupportedScenario: {
         input: '!AIVDM,1,1,,B,KC5E2b@U19PFdLbMuc5=ROv62<7m,0*16',
         output: {
+            aisType: null,
+            mmsi: null,
             rawMessages: ['!AIVDM,1,1,,B,KC5E2b@U19PFdLbMuc5=ROv62<7m,0*16']
         },
     },
     decodedNMEAMessagesInvalidScenario: {
         input: '!AIVDM,1,1,,B,402B4L0000Htt1Lg@6FV500pAg,0*4F',
         output: {
+            aisType: null,
+            mmsi: null,
             rawMessages: ['!AIVDM,1,1,,B,402B4L0000Htt1Lg@6FV500pAg,0*4F']
         },
     },

@@ -1,5 +1,5 @@
-import {dnsLookup} from './utils.js';
-import {calculateChecksum} from "./utils.js";
+import {dnsLookup} from './utils';
+import {calculateChecksum} from "./utils";
 
 const expectedDnsResolvedDomains = ['127.0.0.1', '::1', '8.8.8.8'];
 

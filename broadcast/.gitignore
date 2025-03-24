@@ -31,3 +31,4 @@ cmake-build-debug/
 
 # npm
 .npmrc
+dist/

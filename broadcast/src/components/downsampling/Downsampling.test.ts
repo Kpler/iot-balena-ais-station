@@ -9,7 +9,7 @@ describe('testing downsampling functionality', () => {
     });
 
     describe('with downsamplingRate == 2 second should sample all the message type (1,2,3)', () => {
-        let ds;
+        let ds: Downsampling;
         const RealDate = Date.now;
         beforeEach(() => {
             Date.now = jest.fn(() => new Date(2022, 1, 2, 10, 10, 10).getTime());

@@ -2,7 +2,7 @@ import AISDecoder from './AISDecoder';
 import m from './AISDecoder.mock';
 
 describe('testing AIS decoder', () => {
-    let aisDecoder;
+    let aisDecoder: AISDecoder;
     beforeAll(() => {
         aisDecoder = new AISDecoder();
     });
