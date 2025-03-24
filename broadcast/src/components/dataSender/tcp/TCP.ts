@@ -50,7 +50,6 @@ class TCP {
         if (this.tcpClient === undefined) {
             return;
         }
-        ;
         L.info('Start reconnection');
         this.connected = false;
         this.tcpClient.destroy();
