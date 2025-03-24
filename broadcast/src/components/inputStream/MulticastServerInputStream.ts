@@ -2,32 +2,31 @@ import dgram from 'dgram';
 
 import InputStream from './InputStream';
 import L from '../../appLogger';
+import {AddressInfo} from "node:net";
 
 class MulticastServerInputStream extends InputStream {
-    #inputFeed
+    private readonly inputFeed: dgram.Socket
 
-    constructor(port, multicastAddress) {
+    constructor(port:number, multicastAddress:string) {
         super();
-
+        this.inputFeed = dgram.createSocket('udp4');
         this.#openInputFeed(port, multicastAddress);
     }
 
-    #openInputFeed(port, multicastAddress) {
-        this.#inputFeed = dgram.createSocket('udp4');
-
-        this.#inputFeed.on('listening', () => {
-            const address = this.#inputFeed.address();
+    #openInputFeed(port:number, multicastAddress:string):void {
+        this.inputFeed.on('listening', ():void => {
+            const address:AddressInfo = this.inputFeed.address();
             L.info(`Input Feed listening on ${address.address}:${address.port}`);
-            this.#inputFeed.setBroadcast(true);
-            this.#inputFeed.addMembership(multicastAddress);
+            this.inputFeed.setBroadcast(true);
+            this.inputFeed.addMembership(multicastAddress);
         });
-        this.#inputFeed.bind(port);
-        this.#inputFeed.on('message', (message) => {
+        this.inputFeed.bind(port);
+        this.inputFeed.on('message', (message:Buffer):void => {
             L.debug(`Message feed =>${message}<=`);
             super.write(message.toString().trim());
         });
 
-        this.#inputFeed.on('error', (err) => {
+        this.inputFeed.on('error', (err:Error):void => {
            L.error('UDP ERROR ' + err.message);
         });
     }

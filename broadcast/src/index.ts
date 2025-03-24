@@ -1,10 +1,10 @@
-import { Writable, Transform } from "stream";
+import {Transform, TransformCallback, Writable} from "stream";
 import L from './appLogger';
 import AISDecoder from './components/AISDecoder/index';
 import Downsampling from './components/downsampling/index';
 import * as dataSend from './components/dataSender/index';
 import * as inputStream from './components/inputStream/index';
-import { getPrefix } from './utilities/prefixing';
+import {getPrefix} from './utilities/prefixing';
 import config from "./config";
 
 const inputType = config.app.input.type;
@@ -15,16 +15,16 @@ const outputHost = config.app.output.host;
 const outputPort = +config.app.output.port;
 const sendMode = config.app.output.sendMode;
 const isDataSendEnabled = config.app.output.isDataSendEnabled;
-const downsamplingRate = config.app.downSampling;
+const downsamplingRate = +config.app.downSampling;
 
 L.info('starting broadcast');
 
-const aisDecoder = () => {
+const aisDecoder: () => Transform = (): Transform => {
     const aisDecoder = new AISDecoder();
 
     return new Transform({
         writableObjectMode: true,
-        transform(chunk, encoding, callback) {
+        transform(chunk: Buffer, encoding: BufferEncoding, callback: TransformCallback): void {
             const aisObj = aisDecoder.decode(chunk.toString());
             L.debug(`Decoded AIS obj: ${aisObj && JSON.stringify(aisObj)}`);
 
@@ -36,15 +36,15 @@ const aisDecoder = () => {
     })
 };
 
-const downsampling = () => {
+const downsampling: () => Transform = (): Transform => {
     const ds = new Downsampling(downsamplingRate);
 
     return new Transform({
         writableObjectMode: true,
-        transform(chunk, encoding, callback) {
+        transform(chunk: Buffer, encoding: BufferEncoding, callback: TransformCallback): void {
             const aisObj = JSON.parse(chunk.toString());
             if (ds.sampling(aisObj)) {
-                aisObj.rawMessages.forEach((message) => {
+                aisObj.rawMessages.forEach((message: string): void => {
                     this.push(message);
                 });
             }
@@ -53,7 +53,7 @@ const downsampling = () => {
     })
 };
 
-const output = () => {
+const output: () => Writable = (): Writable => {
     let output;
     switch (sendMode) {
         case 'tcp': {
@@ -67,7 +67,7 @@ const output = () => {
     }
 
     return new Writable({
-        write(chunk, encoding, callback) {
+        write(chunk: Buffer, encoding: BufferEncoding, callback: () => void): void {
             const dataToSend = `${getPrefix()}${chunk.toString()}\r\n`;
             if (isDataSendEnabled) {
                 const sendDataStatus = output.sendData(dataToSend);
@@ -77,7 +77,7 @@ const output = () => {
             }
             callback();
         },
-        final(callback) {
+        final(callback: () => void): void {
             callback();
         }
     });

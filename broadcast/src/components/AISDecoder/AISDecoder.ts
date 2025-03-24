@@ -1,19 +1,19 @@
-import AisParser from 'aisparser';
+import {AISMessage, AisParser} from 'aisparser';
 import L from '../../appLogger';
 
 class AISDecoder {
-    #messageBuffer = [];
-    #parser = new AisParser({checksum: true});
+    private messageBuffer: string[] = [];
+    private readonly parser: AisParser = new AisParser({checksum: true});
 
-    decode(message) {
-        const AISObj = {};
-        this.#messageBuffer.push(message);
-        const parsedMessage = this.#parser.parse(message);
+    decode(message:string):{}|null {
+        const AISObj:AISMessage = {messageType: 0, mmsi: 0, rawMessages: []};
+        this.messageBuffer.push(message);
+        const parsedMessage:AISMessage = this.parser.parse(message);
 
         switch (parsedMessage.valid) {
             case 'VALID': {
                 const suppValues = parsedMessage.supportedValues;
-                Object.keys(suppValues).forEach((field) => {
+                Object.keys(suppValues).forEach((field:string) => {
                     switch (suppValues[field]) {
                         case 'number':
                         case 'deg':
@@ -32,8 +32,8 @@ class AISDecoder {
                         }
                     }
                 });
-                AISObj.rawMessages = this.#messageBuffer;
-                this.#messageBuffer = [];
+                AISObj.rawMessages = this.messageBuffer;
+                this.messageBuffer = [];
 
                 break;
             }
@@ -43,15 +43,15 @@ class AISDecoder {
             }
             case 'UNSUPPORTED': {
                 L.debug(`unsupported message: ${message}`);
-                AISObj.rawMessages = this.#messageBuffer;
-                this.#messageBuffer = [];
+                AISObj.rawMessages = this.messageBuffer;
+                this.messageBuffer = [];
                 break;
             }
             case 'INVALID':
             default: {
                 L.debug(`invalid message: ${message}`);
-                AISObj.rawMessages = this.#messageBuffer;
-                this.#messageBuffer = [];
+                AISObj.rawMessages = this.messageBuffer;
+                this.messageBuffer = [];
                 break;
             }
         }

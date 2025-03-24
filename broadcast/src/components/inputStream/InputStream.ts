@@ -1,14 +1,14 @@
-import { Transform } from 'stream';
+import {Transform, TransformCallback} from 'stream';
 
 class InputStream {
-    dataInputStream = new Transform({
+    dataInputStream:Transform = new Transform({
         writableObjectMode: true,
-        transform(chunk, encoding, callback) {
+        transform(chunk:Buffer, encoding:BufferEncoding, callback:TransformCallback):void {
             callback(null, chunk.toString());
         },
     });
 
-    write(data){
+    write(data:string):void{
         this.dataInputStream.write(data);
     }
 }
