@@ -1,39 +1,39 @@
 import {Transform, Writable} from 'stream';
 import SerialPort from 'serialport';
+import C from './config';
+import L from './appLogger'
+import HexNMEAParser from './components/hexNMEAParser/index';
+import NMEAParser from './components/nmeaParser/index';
+import {Multicast} from "./components/dataSender";
+import {TransformCallback} from "node:stream";
 
-import C from './config.js';
-import L from './appLogger.js'
-import HexNMEAParser from './components/hexNMEAParser/index.js';
-import NMEAParser from './components/nmeaParser/index.js';
-import * as dataSend from './components/dataSender/index.js';
-
-const input = () => {
+const input:()=> SerialPort = (): SerialPort => {
     const port = C.app.serial;
-    const baudRate = C.app.baudRate;
+    const baudRate = +C.app.baudRate;
 
     const serialInput = new SerialPort(port, {baudRate});
 
     serialInput.on('open', () => {
         L.info(`serial ${port} ${baudRate} opened`);
     });
-    serialInput.on('error', (err) => {
+    serialInput.on('error', (err: { message: any; }) => {
         L.error(`Error on serial ${port}:${err.message}`);
     });
-    serialInput.on('data', (data) => {
+    serialInput.on('data', (data: { toString: () => any; }) => {
         L.debug(`Data received: ${data.toString()}`);
     });
 
     return serialInput;
 };
 
-const parser = () => {
-    const parser = C.app.isHexParserEnabled ?
+const parser:()=>Transform = ():Transform => {
+    const parser:HexNMEAParser | NMEAParser = C.app.isHexParserEnabled ?
         new HexNMEAParser()
         : new NMEAParser();
 
     return new Transform({
         encoding: 'ascii',
-        transform(chunk, encoding, callback) {
+        transform(chunk:Buffer, encoding:BufferEncoding, callback:TransformCallback):void {
             L.debug(`parser input: ${chunk.toString()}`)
             const nmeaMessages = parser.parseData(chunk);
             L.debug(`parser output: ${nmeaMessages}`)
@@ -43,30 +43,15 @@ const parser = () => {
     });
 };
 
-const output = () => {
-    const sendMode = C.app.output.sendMode;
-    const host = C.app.output.host;
-    const port = C.app.output.port;
-    const isRawMode = C.app.isRawModeEnabled;
+const output:()=>Writable = ():Writable => {
+    const host:string = C.app.output.host;
+    const port:number = +C.app.output.port;
+    const isRawMode:boolean = C.app.isRawModeEnabled;
 
-    let output;
-    switch (sendMode) {
-        case 'multicast': {
-            output = new dataSend.Multicast(port, host);
-            break;
-        }
-        case 'tcp': {
-            output = new dataSend.TCP(port, host);
-            break;
-        }
-        case 'udp':
-        default: {
-            output = new dataSend.UDP(port, host);
-        }
-    }
+    let output:Multicast = new Multicast(port, host);
 
     return new Writable({
-        write(chunk, encoding, callback) {
+        write(chunk:any, encoding:BufferEncoding, callback) {
             const timestamp = new Date().getTime();
             const data = {
                 type: "serial",

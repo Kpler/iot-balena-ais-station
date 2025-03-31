@@ -2,14 +2,14 @@ import HexNMEAParser from './HexNMEAParser';
 import M from './HexNMEAParser.mock';
 import * as U from './utils';
 
-describe('Testing HexParser', () => {
-    let parser;
-    beforeEach(() => {
+describe('Testing HexParser', (): void => {
+    let parser: HexNMEAParser;
+    beforeEach(():void  => {
         parser = new HexNMEAParser();
     });
     test('should return a array of valid nmea messages based on given raw hex data', () => {
         M.rawData.forEach(({input, output}) => {
-            expect(parser.parseData(input)).toEqual(output);
+            expect(parser.parseData(Buffer.from(input, "hex"))).toEqual(output);
         });
     });
     test('should parse correct all the given hex messages to NMEA messages', () => {
@@ -20,7 +20,7 @@ describe('Testing HexParser', () => {
     describe('testing _splitRawDataToMessages functionality', () => {
         test('should split the input to HexNMEA messages', () => {
             M.rawData.forEach(({input, splitRawDataToMessagesOutput}) => {
-                expect(parser._splitRawDataToMessages(input)).toEqual(splitRawDataToMessagesOutput);
+                expect(parser._splitRawDataToMessages(Buffer.from(input, "hex"))).toEqual(splitRawDataToMessagesOutput);
             })
         });
     });

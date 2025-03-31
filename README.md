@@ -85,7 +85,6 @@ Click the button below to deploy this project to BalenaCloud:
 | BAUD_RATE                 | `38400`            | -                    | baud rate of the serial port                                                                                     |
 | IS_HEX_PARSER_ENABLED     | `false`            | `true`, `false`      | if data are hex-formatted then enable this parser                                                                |
 | IS_RAW_MODE_ENABLED       | `true`             | `true`, `false`      | enable if you want to send the sentence of the AIS messages otherwise a string represantion of the whole message |
-| SERIAL_OUTPUT_SEND_MODE   | `multicast`        | `TCP`, `UDP`         |                                                                                                                  |
 | SERIAL_OUTPUT_HOST        | `230.230.230.230`  | -                    |                                                                                                                  |
 | SERIAL_OUTPUT_PORT        | `55501`            | -                    |                                                                                                                  |
 | LOG_LEVEL                 | `info`             | `debug`              |                                                                                                                  |
