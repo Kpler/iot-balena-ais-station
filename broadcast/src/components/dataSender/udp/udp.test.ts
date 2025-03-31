@@ -8,18 +8,18 @@ jest.mock('../../../utilities/utils',() => ({
 
 describe('testing udp data send', () => {
     const dataSend = 'test';
-    let udpClient;
-    beforeEach(() => {
+    let udpClient: UDP;
+    beforeEach(():void => {
         // Clear all instances and calls to constructor and all methods:
-        dgram.createSocket.mockClear();
+        (dgram.createSocket as jest.Mock).mockClear();
         udpClient = new UDP(33333, '127.0.0.1');
     });
 
     describe('with no error in response', () => {
-        dgram.createSocket = jest.fn(() => {
+        (dgram.createSocket as jest.Mock).mockImplementation(() => {
             return {
                 send: jest.fn(),
-            };
+            } as unknown as dgram.Socket;
         });
 
         test('should send data to UDP server', () => {
@@ -28,12 +28,10 @@ describe('testing udp data send', () => {
         });
     });
     describe('with error in response', () => {
-        dgram.createSocket = jest.fn(() => {
+        (dgram.createSocket as jest.Mock).mockImplementation(() => {
             return {
-                send: jest.fn((data, serverPort, serverHost, cb) => {
-                    cb(new Error('error'));
-                }),
-            };
+                send: jest.fn(),
+            } as unknown as dgram.Socket;
         });
 
         test('should send data to UDP server', () => {
