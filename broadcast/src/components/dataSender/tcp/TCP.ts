@@ -47,7 +47,7 @@ class TCP {
     }
 
     reconnect(): void {
-        if (this.tcpClient === undefined) {
+        if (!this.tcpClient) {
             return;
         }
         L.info('Start reconnection');
@@ -72,7 +72,7 @@ class TCP {
     }
 
     sendData(data: string): boolean {
-        if (!this.connected || this.tcpClient === undefined) {
+        if (!this.connected || !this.tcpClient) {
             return false;
         }
 
