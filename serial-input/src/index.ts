@@ -7,7 +7,7 @@ import NMEAParser from './components/nmeaParser/index';
 import {Multicast} from "./components/dataSender";
 import {TransformCallback} from "node:stream";
 
-const input:()=> SerialPort = (): SerialPort => {
+const input: () => SerialPort = (): SerialPort => {
     const port = C.app.serial;
     const baudRate = +C.app.baudRate;
 
@@ -26,14 +26,14 @@ const input:()=> SerialPort = (): SerialPort => {
     return serialInput;
 };
 
-const parser:()=>Transform = ():Transform => {
-    const parser:HexNMEAParser | NMEAParser = C.app.isHexParserEnabled ?
+const parser: () => Transform = (): Transform => {
+    const parser: HexNMEAParser | NMEAParser = C.app.isHexParserEnabled ?
         new HexNMEAParser()
         : new NMEAParser();
 
     return new Transform({
         encoding: 'ascii',
-        transform(chunk:Buffer, encoding:BufferEncoding, callback:TransformCallback):void {
+        transform(chunk: Buffer, encoding: BufferEncoding, callback: TransformCallback): void {
             L.debug(`parser input: ${chunk.toString()}`)
             const nmeaMessages = parser.parseData(chunk);
             L.debug(`parser output: ${nmeaMessages}`)
@@ -43,15 +43,15 @@ const parser:()=>Transform = ():Transform => {
     });
 };
 
-const output:()=>Writable = ():Writable => {
-    const host:string = C.app.output.host;
-    const port:number = +C.app.output.port;
-    const isRawMode:boolean = C.app.isRawModeEnabled;
+const output: () => Writable = (): Writable => {
+    const host: string = C.app.output.host;
+    const port: number = +C.app.output.port;
+    const isRawMode: boolean = C.app.isRawModeEnabled;
 
-    let output:Multicast = new Multicast(port, host);
+    let output: Multicast = new Multicast(port, host);
 
     return new Writable({
-        write(chunk:any, encoding:BufferEncoding, callback) {
+        write(chunk: any, encoding: BufferEncoding, callback) {
             const timestamp = new Date().getTime();
             const data = {
                 type: "serial",

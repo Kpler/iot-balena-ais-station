@@ -10,9 +10,15 @@ services:
     privileged: true
     build: ./serial-input
     restart: always
+  network-input:
+    build: ./network-input
+    restart: always
+    ports:
+      - '6501:6501/udp'
   broadcast:
     build: ./broadcast
     depends_on:
+      - network-input
       - serial-input
       - rtl-sdr
     restart: always
