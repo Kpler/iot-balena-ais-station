@@ -29,5 +29,3 @@ cmake-build-debug/
 #balena
 .balena/
 .npmrc
-
-docker-compose.local.yml
