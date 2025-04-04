@@ -1,5 +1,5 @@
 import dgram from 'dgram';
-import L from '../../../appLogger';
+import L from '../../appLogger';
 import {Socket} from "node:dgram";
 import {AddressInfo} from "node:net";
 
@@ -23,7 +23,6 @@ class Multicast {
             L.debug(`Multicast destination - ${multicastAddress}:${destinationPort} - server listening ${address.address}:${address.port}`);
             this.server.setBroadcast(true)
         });
-
         this.server.bind();
     }
 

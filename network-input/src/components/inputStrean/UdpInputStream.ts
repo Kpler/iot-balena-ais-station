@@ -13,7 +13,7 @@ export default class UdpInputStream extends InputStream {
         this.server= createSocket('udp4');
         this.server.on('message', (msg: Buffer, rinfo: RemoteInfo ) => {
             L.debug(`UDP message from ${rinfo.address}:${rinfo.port} - ${msg}`);
-            this.stream.write(msg.toString());
+            this.push(msg.toString());
         });
         this.server.on('error', (err: Error) => {
             L.error(`UDP server error: ${err.message} - ${err.stack}`);

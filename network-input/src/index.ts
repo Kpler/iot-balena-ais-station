@@ -1,37 +1,16 @@
-import {Writable} from "stream";
 import C from './config';
-import L from './appLogger';
 import UdpInputStream from "./components/inputStrean/UdpInputStream";
-import {Multicast} from "./components/dataSender/index";
+import OutputStream from "./components/outputStream/OutputStream";
 
 
-const host = C.app.input.host;
-const port = C.app.input.port;
+const inputHost = C.app.input.host;
+const inputPort = C.app.input.port;
 const networkInput = new UdpInputStream();
-networkInput.listen(port, host);
+networkInput.listen(inputPort, inputHost);
 
-const output: () => Writable = (): Writable => {
-    const host: string = C.app.output.host;
-    const port: number = C.app.output.port;
+const outputHost: string = C.app.output.host;
+const outputPort: number = C.app.output.port;
+const outputStream = new OutputStream(outputPort, outputHost);
 
-    let output: Multicast = new Multicast(port, host);
-    return new Writable({
-        write(chunk: any, encoding: BufferEncoding, callback) {
-            const timestamp = new Date().getTime();
-            const data = {
-                type: "network",
-                timestamp,
-                sentence: chunk.toString(),
-            };
-            L.debug(`send data to ${host} ${port}`);
-            output.sendData(JSON.stringify(data));
-            callback();
-        },
-        final(callback) {
-            L.debug('stream finalized');
-            callback();
-        }
-    });
-};
-
-networkInput.stream.pipe(output());
+networkInput
+    .pipe(outputStream);

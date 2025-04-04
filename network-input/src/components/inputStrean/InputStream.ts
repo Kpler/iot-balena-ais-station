@@ -1,18 +1,12 @@
-import {Transform} from "node:stream";
+import {Transform, TransformCallback} from "node:stream";
 
-export default class InputStream {
-    stream: Transform;
-
+export default class InputStream extends Transform {
     constructor() {
-        this.stream = new Transform({
-            writableObjectMode: true,
-            transform: (chunk, encoding, callback) => {
-                callback(null, chunk.toString());
-            }
-        });
+        super({ writableObjectMode: true });
     }
 
-    write(data: string) {
-        this.stream.write(data);
+    _transform(chunk: any, encoding: BufferEncoding, callback: TransformCallback) {
+        callback(null, chunk.toString());
     }
+
 }
