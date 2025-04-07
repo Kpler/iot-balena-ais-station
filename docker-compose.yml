@@ -5,7 +5,7 @@ services:
   rtl-sdr:
     build: ./rtl-sdr
     privileged: true
-    restart: always
+    restart: unless-stopped
   serial-input:
     privileged: true
     build: ./serial-input
@@ -17,8 +17,8 @@ services:
       - rtl-sdr
     restart: always
   wifi-connect:
-    image: bh.cr/balenalabs/wifi-connect-armv7hf
-    restart: always
+    build: ./wifi-connect
+    restart: unless-stopped
     network_mode: host
     privileged: true
     environment:
