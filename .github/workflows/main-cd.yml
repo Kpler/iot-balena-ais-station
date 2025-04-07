@@ -44,6 +44,7 @@ jobs:
           git push origin "v${{ env.current_version }}"
   deploy-to-balena:
     name: "Deploy-to-Balena"
+    needs: [create-version]
     runs-on: "ubuntu-latest"
     steps:
       - name: Checkout main branch
