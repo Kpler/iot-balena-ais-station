@@ -42,6 +42,8 @@ jobs:
           
           git tag -a "v${{ env.current_version }}" -m "Release version ${{ env.current_version }}"
           git push origin "v${{ env.current_version }}"
+          
+
   deploy-to-balena:
     name: "Deploy-to-Balena"
     needs: [create-version]
