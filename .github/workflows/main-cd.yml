@@ -40,8 +40,8 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           
-          git tag -a "v${{ env.current_version }}" -m "Release version ${{ env.current_version }}"
-          git push origin "v${{ env.current_version }}"
+          git tag -a "${{ env.current_version }}" -m "Release version ${{ env.current_version }}"
+          git push origin "${{ env.current_version }}"
           
 
   deploy-to-balena:
@@ -56,7 +56,7 @@ jobs:
         uses: balena-io-experimental/balena.yml-action@main
         with:
           sync_readme: true
-          sync_tag: true
+          sync_tag: false
 
       - name: Deploy to Balena
         uses: balena-io/deploy-to-balena-action@master
