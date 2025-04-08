@@ -11,6 +11,10 @@ assets:
     type: blob.asset
     data:
      url: 'https://github.com/Kpler/iot-balena-ais-station'
+  logo:
+    type: "blob.asset"
+    data:
+     url: "https://www.marinetraffic.com/img/logos/MarineTrafficLogoSignetBlue.png"
 
 data:
   applicationConfigVariables:
