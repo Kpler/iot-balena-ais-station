@@ -5,7 +5,7 @@ services:
   rtl-sdr:
     build: ./rtl-sdr
     privileged: true
-    restart: always
+    restart: unless-stopped
   serial-input:
     privileged: true
     build: ./serial-input
@@ -22,3 +22,18 @@ services:
       - serial-input
       - rtl-sdr
     restart: always
+  wifi-connect:
+    build: ./wifi-connect
+    restart: unless-stopped
+    network_mode: host
+    privileged: true
+    environment:
+      - DBUS_SYSTEM_BUS_ADDRESS=unix:path=/host/run/dbus/system_bus_socket
+      - PORTAL_SSID=BCA-Wifi-Connect
+      - PORTAL_PASSPHRASE=BCA_pass
+      - ACTIVITY_TIMEOUT=300
+    cap_add:
+      - NET_ADMIN
+    labels:
+      io.balena.features.dbus: '1'
+      io.balena.features.supervisor-api: '1'

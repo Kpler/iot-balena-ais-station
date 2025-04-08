@@ -1,0 +1,66 @@
+name: New Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+
+permissions:
+  contents: write
+  packages: read
+  pull-requests: write
+  id-token: write
+
+env:
+  BALENA_APP: network2/balena-ais-application
+
+
+jobs:
+  create-version:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: "0"
+      - name: Fetch all branches
+        run: git fetch --prune
+
+      - name: Show current branch
+        run: git branch
+      - name: Extract and increment version
+        id: increment-version
+        run: |
+          CURRENT_VERSION=$(yq eval '.version' balena.yml)
+          echo "current_version=$CURRENT_VERSION" >> $GITHUB_ENV
+
+      - name: Create GitHub Tag
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          
+          git tag -a "${{ env.current_version }}" -m "Release version ${{ env.current_version }}"
+          git push origin "${{ env.current_version }}"
+          
+
+  deploy-to-balena:
+    name: "Deploy-to-Balena"
+    needs: [create-version]
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+
+      - name: Sync balena.yml to Balena Hub
+        uses: balena-io-experimental/balena.yml-action@main
+        with:
+          sync_readme: true
+          sync_tag: false
+
+      - name: Deploy to Balena
+        uses: balena-io/deploy-to-balena-action@master
+        with:
+          balena_token: ${{ secrets.BALENA_API_KEY }}
+          fleet: ${{ env.BALENA_APP }}
+          multi_dockerignore: true
